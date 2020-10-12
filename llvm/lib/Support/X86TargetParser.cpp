@@ -138,7 +138,16 @@ static constexpr FeatureBitset FeaturesNocona =
     FeaturesPrescott | Feature64BIT | FeatureCMPXCHG16B;
 
 // Basic 64-bit capable CPU.
-static constexpr FeatureBitset FeaturesX86_64 = FeaturesPentium4 | Feature64BIT;
+constexpr FeatureBitset FeaturesX86_64 = FeaturesPentium4 | Feature64BIT;
+constexpr FeatureBitset FeaturesX86_64_V2 = FeaturesX86_64 | FeatureSAHF |
+                                            FeaturePOPCNT | FeatureSSE4_2 |
+                                            FeatureCMPXCHG16B;
+constexpr FeatureBitset FeaturesX86_64_V3 =
+    FeaturesX86_64_V2 | FeatureAVX2 | FeatureBMI | FeatureBMI2 | FeatureF16C |
+    FeatureFMA | FeatureLZCNT | FeatureMOVBE | FeatureXSAVE;
+constexpr FeatureBitset FeaturesX86_64_V4 = FeaturesX86_64_V3 |
+                                            FeatureAVX512BW | FeatureAVX512CD |
+                                            FeatureAVX512DQ | FeatureAVX512VL;
 
 // Intel Core CPUs
 static constexpr FeatureBitset FeaturesCore2 =
@@ -381,9 +390,14 @@ static constexpr ProcInfo Processors[] = {
   { {"znver2"}, CK_ZNVER2, FEATURE_AVX2, FeaturesZNVER2 },
   // Generic 64-bit processor.
   { {"x86-64"}, CK_x86_64, ~0U, FeaturesX86_64 },
+  { {"x86-64-v2"}, CK_x86_64_v2, ~0U, FeaturesX86_64_V2 },
+  { {"x86-64-v3"}, CK_x86_64_v3, ~0U, FeaturesX86_64_V3 },
+  { {"x86-64-v4"}, CK_x86_64_v4, ~0U, FeaturesX86_64_V4 },
   // Geode processors.
   { {"geode"}, CK_Geode, ~0U, FeaturesGeode },
 };
+
+constexpr const char *NoTuneList[] = {"x86-64-v2", "x86-64-v3", "x86-64-v4"};
 
 X86::CPUKind llvm::X86::parseArchX86(StringRef CPU, bool Only64Bit) {
   for (const auto &P : Processors)

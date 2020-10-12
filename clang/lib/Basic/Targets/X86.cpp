@@ -505,6 +505,9 @@ void X86TargetInfo::getTargetDefines(const LangOptions &Opts,
   case CK_K8:
   case CK_K8SSE3:
   case CK_x86_64:
+  case CK_x86_64_v2:
+  case CK_x86_64_v3:
+  case CK_x86_64_v4:
     defineCPUMacros(Builder, "k8");
     break;
   case CK_AMDFAM10:
@@ -1297,6 +1300,9 @@ Optional<unsigned> X86TargetInfo::getCPUCacheLineSize() const {
     case CK_ZNVER2:
     // Deprecated
     case CK_x86_64:
+    case CK_x86_64_v2:
+    case CK_x86_64_v3:
+    case CK_x86_64_v4:
     case CK_Yonah:
     case CK_Penryn:
     case CK_Core2:

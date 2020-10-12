@@ -455,6 +455,10 @@ New features for OpenMP 5.0 were implemented.
 
 - Bug fixes and optimizations.
 
+- Support for ``-march=sapphirerapids`` was added.
+
+- Support for ``-march=x86-64-v[234]`` has been added.
+  See :doc:`UsersManual` for details about these micro-architecture levels.
 
 Internal API Changes
 --------------------
